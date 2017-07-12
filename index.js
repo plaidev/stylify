@@ -71,7 +71,7 @@ function resolveUses(uses) {
 }
 
 function applyOptions(stylus, options) {
-  ['set', 'include', 'import', 'define', 'use'].forEach(function(method) {
+  ['set', 'include', 'import', 'define', 'use', 'nib'].forEach(function(method) {
     var option = options[method];
 
     if (Array.isArray(option)) {
@@ -80,6 +80,11 @@ function applyOptions(stylus, options) {
     } else {
       for (var prop in option)
         stylus[method](prop, option[prop]);
+    }
+    
+    if (method == 'nib' && option === true) {
+      var nib = require('nib');
+      stylus.use(nib());
     }
   });
 }
